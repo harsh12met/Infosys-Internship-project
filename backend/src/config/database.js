@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const mongoURI = 'mongodb+srv://kanban-user:kanban-user1234@kanbancluster.9rfardz.mongodb.net/kanban?retryWrites=true&w=majority';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://kanban-user:kanban-user1234@kanbancluster.9rfardz.mongodb.net/kanban?retryWrites=true&w=majority';
     
     await mongoose.connect(mongoURI);
 
