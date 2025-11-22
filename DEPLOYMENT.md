@@ -3,6 +3,7 @@
 ## 📦 Deployment Overview
 
 This project uses:
+
 - **Frontend (Angular)**: Deployed on Netlify
 - **Backend (Node.js/Express)**: Deployed on Render
 - **Database**: MongoDB Atlas
@@ -12,12 +13,14 @@ This project uses:
 ## 🚀 Frontend Deployment (Netlify)
 
 ### Prerequisites
+
 1. Create a [Netlify](https://www.netlify.com/) account
 2. Connect your GitHub repository
 
 ### Steps
 
 1. **Push your code to GitHub:**
+
    ```bash
    git add .
    git commit -m "Add deployment configuration"
@@ -25,6 +28,7 @@ This project uses:
    ```
 
 2. **Deploy on Netlify:**
+
    - Go to [Netlify Dashboard](https://app.netlify.com/)
    - Click "Add new site" → "Import an existing project"
    - Choose "GitHub" and select your repository
@@ -34,6 +38,7 @@ This project uses:
      - Publish directory: `frontend/dist/my-kanban-project/browser`
 
 3. **Environment Variables (Optional):**
+
    - Go to Site settings → Environment variables
    - Add any frontend-specific variables if needed
 
@@ -46,12 +51,14 @@ This project uses:
 ## 🔧 Backend Deployment (Render)
 
 ### Prerequisites
+
 1. Create a [Render](https://render.com/) account
 2. Create a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) database
 
 ### Steps
 
 1. **Create MongoDB Atlas Database:**
+
    - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
    - Create a free cluster
    - Create a database user
@@ -59,6 +66,7 @@ This project uses:
    - Whitelist IP: `0.0.0.0/0` (Allow from anywhere)
 
 2. **Deploy on Render:**
+
    - Go to [Render Dashboard](https://dashboard.render.com/)
    - Click "New" → "Web Service"
    - Connect your GitHub repository
@@ -72,6 +80,7 @@ This project uses:
 
 3. **Add Environment Variables:**
    Click "Environment" and add:
+
    ```
    MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/kanban?retryWrites=true&w=majority
    JWT_SECRET=your-super-secret-jwt-key-change-this
@@ -89,14 +98,16 @@ This project uses:
 ## 🔄 Update Frontend with Backend URL
 
 1. **Edit `frontend/src/environments/environment.prod.ts`:**
+
    ```typescript
    export const environment = {
      production: true,
-     apiUrl: 'https://your-backend-url.onrender.com/api',
+     apiUrl: "https://your-backend-url.onrender.com/api",
    };
    ```
 
 2. **Commit and push:**
+
    ```bash
    git add .
    git commit -m "Update production API URL"
@@ -128,20 +139,24 @@ The backend is already configured to accept requests from your frontend. Make su
 ## 🐛 Troubleshooting
 
 ### Frontend Build Fails
+
 - Check `netlify.toml` configuration
 - Ensure Node version is 18 or higher
 - Check build logs on Netlify
 
 ### Backend Connection Issues
+
 - Verify MongoDB connection string in Render environment variables
 - Check if MongoDB Atlas IP whitelist includes `0.0.0.0/0`
 - Review Render logs for errors
 
 ### CORS Errors
+
 - Ensure `FRONTEND_URL` in Render matches your Netlify URL exactly
 - Check if frontend is using HTTPS (Netlify provides this automatically)
 
 ### Database Connection Fails
+
 - Verify MongoDB Atlas cluster is running
 - Check username/password in connection string
 - Ensure network access allows connections from anywhere
@@ -151,6 +166,7 @@ The backend is already configured to accept requests from your frontend. Make su
 ## 🌐 Live URLs
 
 After deployment, your URLs will be:
+
 - **Frontend**: `https://your-project.netlify.app`
 - **Backend**: `https://your-backend.onrender.com`
 
@@ -167,6 +183,7 @@ After deployment, your URLs will be:
 ## 🔄 Continuous Deployment
 
 Both Netlify and Render are configured for automatic deployment:
+
 - Push to `main` branch → Automatic deployment on both platforms
 - Build logs available in respective dashboards
 
@@ -175,11 +192,13 @@ Both Netlify and Render are configured for automatic deployment:
 ## 💡 Tips
 
 1. **Free Tier Limitations:**
+
    - Render free tier: Service spins down after 15 min of inactivity (first request may be slow)
    - MongoDB Atlas free tier: 512MB storage
    - Netlify free tier: 100GB bandwidth/month
 
 2. **Keep Secrets Safe:**
+
    - Never commit `.env` files to Git
    - Use environment variables for sensitive data
    - Rotate JWT secrets periodically

@@ -24,6 +24,7 @@ A full-stack Kanban task management application with drag-and-drop functionality
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **Framework**: Angular 19
 - **Styling**: Custom CSS with modern gradients
 - **HTTP Client**: Angular HttpClient
@@ -31,6 +32,7 @@ A full-stack Kanban task management application with drag-and-drop functionality
 - **State Management**: Services with RxJS
 
 ### Backend
+
 - **Runtime**: Node.js
 - **Framework**: Express.js
 - **Database**: MongoDB with Mongoose
@@ -43,17 +45,20 @@ A full-stack Kanban task management application with drag-and-drop functionality
 ## 📦 Installation
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - MongoDB (local or Atlas)
 - Git
 
 ### Clone Repository
+
 ```bash
 git clone https://github.com/harsh12met/Infosys-Internship-project.git
 cd Infosys-Internship-project
 ```
 
 ### Backend Setup
+
 ```bash
 cd backend
 npm install
@@ -73,6 +78,7 @@ npm run dev
 Backend will run on `http://localhost:3000`
 
 ### Frontend Setup
+
 ```bash
 cd frontend
 npm install
@@ -92,10 +98,12 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Net
 ### Quick Deploy
 
 **Frontend (Netlify):**
+
 - Automatically configured via `netlify.toml`
 - Just connect your GitHub repo to Netlify
 
 **Backend (Render):**
+
 - Root Directory: `backend`
 - Build Command: `npm install`
 - Start Command: `npm start`
@@ -137,10 +145,12 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Net
 ### User Roles
 
 1. **Individual User**
+
    - Create personal boards and tasks
    - Manage own tasks and columns
 
 2. **Group Leader**
+
    - Invite members to the team
    - Clear entire board
    - Manage team tasks
@@ -152,14 +162,17 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Net
 ### Core Workflows
 
 1. **Sign Up / Login**
+
    - Register as individual or group leader
    - Login to access your board
 
 2. **Create Columns**
+
    - Add custom columns (e.g., "To Do", "In Progress", "Done")
    - Reorder columns via drag-and-drop
 
 3. **Manage Tasks**
+
    - Create tasks with title and description
    - Drag tasks between columns
    - Add priority and due dates
@@ -177,6 +190,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Net
 ### Environment Variables
 
 **Backend (`backend/.env`):**
+
 ```env
 MONGODB_URI=mongodb://localhost:27017/kanban
 JWT_SECRET=your-super-secret-jwt-key
@@ -186,10 +200,11 @@ FRONTEND_URL=http://localhost:4201
 ```
 
 **Frontend (`frontend/src/environments/environment.ts`):**
+
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: "http://localhost:3000/api",
 };
 ```
 
@@ -198,12 +213,14 @@ export const environment = {
 ## 🧪 Testing
 
 ### Backend Tests
+
 ```bash
 cd backend
 npm test
 ```
 
 ### Frontend Tests
+
 ```bash
 cd frontend
 ng test
@@ -214,30 +231,36 @@ ng test
 ## 📊 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login user
 
 ### Boards
+
 - `GET /api/boards` - Get user's board
 - `POST /api/boards` - Create board
 - `DELETE /api/boards/:id/clear` - Clear board (Leaders only)
 
 ### Columns
+
 - `POST /api/columns` - Create column
 - `PUT /api/columns/:id` - Update column
 - `DELETE /api/columns/:id` - Delete column
 
 ### Tasks
+
 - `GET /api/tasks` - Get all tasks
 - `POST /api/tasks` - Create task
 - `PUT /api/tasks/:id` - Update task
 - `DELETE /api/tasks/:id` - Delete task
 
 ### Comments
+
 - `GET /api/tasks/:taskId/comments` - Get task comments
 - `POST /api/tasks/:taskId/comments` - Add comment
 
 ### Notifications
+
 - `GET /api/notifications` - Get user notifications
 - `PUT /api/notifications/:id/read` - Mark as read
 
@@ -264,6 +287,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Harshal Mali**
+
 - GitHub: [@harsh12met](https://github.com/harsh12met)
 - Email: harshalmali11204@gmail.com
 
@@ -281,6 +305,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 If you have any questions or issues, please:
+
 1. Check the [DEPLOYMENT.md](./DEPLOYMENT.md) guide
 2. Open an issue on GitHub
 3. Contact: harshalmali11204@gmail.com
