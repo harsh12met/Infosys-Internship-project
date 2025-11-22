@@ -12,7 +12,7 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 18
-  
+
   # Backend API
   - type: web
     name: projectflow-backend
@@ -29,8 +29,8 @@ services:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        sync: false  # Set this in Render dashboard
+        sync: false # Set this in Render dashboard
       - key: JWT_SECRET
-        sync: false  # Set this in Render dashboard
+        sync: false # Set this in Render dashboard
       - key: FRONTEND_URL
-        sync: false  # Set this in Render dashboard
+        sync: false # Set this in Render dashboard
