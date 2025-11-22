@@ -9,8 +9,11 @@
     "frontend": "cd frontend && npm start",
     "backend": "cd backend && npm run dev",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "build:frontend": "cd frontend && npm run build",
-    "start": "npm run dev"
+    "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
+    "start": "npx serve frontend/dist/my-kanban-project/browser -s -l 4201"
+  },
+  "dependencies": {
+    "serve": "^14.2.3"
   },
   "keywords": ["kanban", "angular", "express", "fullstack"],
   "author": "Harshal Mali",
