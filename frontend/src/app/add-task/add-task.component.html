@@ -1,0 +1,147 @@
+<!-- Add Task Button (when form is hidden) -->
+<div class="add-task-container">
+  <button *ngIf="!isFormVisible" class="add-task-btn" (click)="showForm()">
+    <span class="plus-icon">+</span>
+    Add a task
+  </button>
+
+  <!-- Add Task Form (when form is visible) -->
+  <div
+    *ngIf="isFormVisible"
+    class="add-task-form"
+    (keydown)="onKeydown($event)"
+  >
+    <form (ngSubmit)="onFormSubmit()" #taskForm="ngForm">
+      <!-- Task Title Input -->
+      <input
+        type="text"
+        [(ngModel)]="taskTitle"
+        name="taskTitle"
+        class="add-task-title"
+        placeholder="Enter a title for this task..."
+        required
+        maxlength="100"
+      />
+
+      <!-- Task Description Textarea -->
+      <textarea
+        [(ngModel)]="taskDescription"
+        name="taskDescription"
+        class="add-task-description"
+        placeholder="Enter a description (optional)..."
+        rows="3"
+        maxlength="500"
+      ></textarea>
+
+      <!-- Due Date Input -->
+      <div class="form-field">
+        <label class="field-label">Due Date:</label>
+        <input
+          type="date"
+          [(ngModel)]="taskDueDate"
+          name="taskDueDate"
+          class="date-input"
+        />
+      </div>
+
+      <!-- Priority Selection -->
+      <div class="form-field">
+        <label class="field-label">Priority:</label>
+        <select
+          [(ngModel)]="taskPriority"
+          name="taskPriority"
+          class="priority-select"
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+
+      <!-- Assign To (Only for Group Leaders) -->
+      <div *ngIf="isGroupLeader" class="form-field">
+        <label class="field-label">Assign To:</label>
+        <div class="assignment-container">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              [(ngModel)]="memberSearchQuery"
+              name="memberSearch"
+              (input)="filterMembers()"
+              (focus)="onFocusAssignment()"
+              (blur)="showMemberDropdown = false"
+              class="member-search-input"
+              placeholder="🔍 Click to view and assign to member..."
+              autocomplete="off"
+            />
+            <button
+              *ngIf="assignedTo"
+              type="button"
+              class="clear-assignment-btn"
+              (click)="clearAssignment(); $event.stopPropagation()"
+              title="Clear assignment"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- Member Dropdown -->
+          <div
+            *ngIf="showMemberDropdown && filteredMembers.length > 0"
+            class="member-dropdown"
+            (mousedown)="$event.preventDefault()"
+          >
+            <div
+              *ngFor="let member of filteredMembers"
+              class="member-item"
+              (click)="selectMember(member)"
+            >
+              <div class="member-avatar">
+                {{ member.name.charAt(0).toUpperCase() }}
+              </div>
+              <div class="member-details">
+                <div class="member-name">{{ member.name }}</div>
+                <div class="member-email">{{ member.email }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              showMemberDropdown &&
+              filteredMembers.length === 0 &&
+              groupMembers.length === 0
+            "
+            class="no-members-message"
+            (mousedown)="$event.preventDefault()"
+          >
+            No group members found. Please add members to your group first.
+          </div>
+
+          <div
+            *ngIf="
+              showMemberDropdown &&
+              filteredMembers.length === 0 &&
+              groupMembers.length > 0 &&
+              memberSearchQuery
+            "
+            class="no-members-message"
+            (mousedown)="$event.preventDefault()"
+          >
+            No members match "{{ memberSearchQuery }}"
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="!taskTitle.trim()">
+          Add Task
+        </button>
+        <button type="button" class="cancel-btn" (click)="hideForm()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

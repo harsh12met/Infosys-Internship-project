@@ -1,0 +1,236 @@
+.solutions-page {
+  min-height: 100vh;
+  background: #f4f5f7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, #0079bf 0%, #5243aa 100%);
+  padding: 80px 0;
+  text-align: center;
+  color: white;
+}
+
+.page-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.page-header p {
+  font-size: 20px;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Solutions Section */
+.solutions-section {
+  padding: 80px 0;
+}
+
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+}
+
+.solution-card {
+  background: white;
+  border-radius: 12px;
+  padding: 36px 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.solution-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.solution-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.solution-card h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #172b4d;
+  margin-bottom: 12px;
+}
+
+.solution-desc {
+  font-size: 15px;
+  color: #5e6c84;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.benefits h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits li {
+  font-size: 14px;
+  color: #5e6c84;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkmark {
+  color: #00c853;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Use Cases Section */
+.use-cases {
+  background: white;
+  padding: 80px 0;
+}
+
+.use-cases h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 48px;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.story-card {
+  background: #f4f5f7;
+  border-radius: 12px;
+  padding: 32px;
+  position: relative;
+}
+
+.quote-icon {
+  font-size: 60px;
+  color: #0079bf;
+  opacity: 0.2;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.story-text {
+  font-size: 16px;
+  color: #172b4d;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.author strong {
+  color: #172b4d;
+  font-size: 15px;
+}
+
+.author span {
+  color: #5e6c84;
+  font-size: 13px;
+}
+
+/* CTA Section */
+.cta-section {
+  background: #f4f5f7;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 16px;
+}
+
+.cta-section p {
+  font-size: 18px;
+  color: #5e6c84;
+  margin-bottom: 32px;
+}
+
+.btn-cta {
+  background: #0079bf;
+  color: white;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 121, 191, 0.3);
+}
+
+.btn-cta:hover {
+  background: #026aa7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 121, 191, 0.4);
+}
+
+/* Back Link */
+.back-link {
+  text-align: center;
+  padding: 40px 0;
+  background: white;
+}
+
+.back-link a {
+  color: #0079bf;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: opacity 0.2s;
+}
+
+.back-link a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 36px;
+  }
+
+  .page-header p {
+    font-size: 18px;
+  }
+
+  .solutions-grid,
+  .stories-grid {
+    grid-template-columns: 1fr;
+  }
+}

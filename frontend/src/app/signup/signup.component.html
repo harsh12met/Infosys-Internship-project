@@ -1,0 +1,285 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <!-- Logo and Header -->
+    <div class="signup-header">
+      <div class="logo" routerLink="/">
+        <h1>📋 Kanban</h1>
+      </div>
+      <h2>Create Your Account</h2>
+      <p class="subtitle">Step {{ currentStep }} of 4</p>
+
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          [style.width.%]="(currentStep / 4) * 100"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Step 1: Name and Email -->
+    <div *ngIf="currentStep === 1" class="step-content">
+      <h3 class="step-title">Let's get started</h3>
+      <p class="step-description">Enter your basic information</p>
+
+      <div class="form-group">
+        <label for="name">
+          <span class="icon">👤</span>
+          Full Name
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          [(ngModel)]="formData.name"
+          placeholder="Enter your full name"
+          autofocus
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">
+          <span class="icon">📧</span>
+          Email Address
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="formData.email"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <button type="button" class="submit-btn" (click)="nextStep()">
+        Next →
+      </button>
+    </div>
+
+    <!-- Step 2: User Type Selection -->
+    <div *ngIf="currentStep === 2" class="step-content">
+      <h3 class="step-title">Task Management For:</h3>
+      <p class="step-description">Choose how you want to use Kanban</p>
+
+      <div class="selection-grid">
+        <div
+          class="selection-card"
+          [class.selected]="formData.userType === 'single'"
+          (click)="selectUserType('single')"
+        >
+          <div class="card-icon">👤</div>
+          <h4>Single User</h4>
+          <p>Manage your personal tasks independently</p>
+        </div>
+
+        <div
+          class="selection-card"
+          [class.selected]="formData.userType === 'group'"
+          (click)="selectUserType('group')"
+        >
+          <div class="card-icon">👥</div>
+          <h4>Group/Team</h4>
+          <p>Collaborate with your team members</p>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="back-btn" (click)="previousStep()">
+          ← Back
+        </button>
+        <button type="button" class="submit-btn" (click)="nextStep()">
+          Next →
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: Role Selection (only for group) -->
+    <div
+      *ngIf="currentStep === 3 && formData.userType === 'group'"
+      class="step-content"
+    >
+      <h3 class="step-title">Your Role in the Group</h3>
+      <p class="step-description">Select your role to continue</p>
+
+      <div class="selection-grid">
+        <div
+          class="selection-card"
+          [class.selected]="formData.role === 'leader'"
+          (click)="selectRole('leader')"
+        >
+          <div class="card-icon">👑</div>
+          <h4>Group Leader</h4>
+          <p>Create and manage your team</p>
+          <small class="badge">You'll get an access key</small>
+        </div>
+
+        <div
+          class="selection-card"
+          [class.selected]="formData.role === 'member'"
+          (click)="selectRole('member')"
+        >
+          <div class="card-icon">👨‍💼</div>
+          <h4>Member</h4>
+          <p>Join an existing team</p>
+          <small class="badge">Requires access key</small>
+        </div>
+      </div>
+
+      <!-- Access Key Input for Members -->
+      <div *ngIf="formData.role === 'member'" class="form-group">
+        <label for="accessKey">
+          <span class="icon">🔑</span>
+          Enter Access Key
+        </label>
+        <input
+          type="text"
+          id="accessKey"
+          name="accessKey"
+          [(ngModel)]="formData.accessKey"
+          placeholder="Enter the key from your leader"
+          maxlength="8"
+          style="text-transform: uppercase"
+        />
+        <small class="help-text"
+          >Ask your group leader for the access key</small
+        >
+      </div>
+
+      <!-- Create Access Key for Leaders -->
+      <div *ngIf="formData.role === 'leader'" class="access-key-creator">
+        <button
+          type="button"
+          class="create-key-btn"
+          (click)="generateAccessKey()"
+          [disabled]="formData.tempAccessKey"
+        >
+          <span class="icon">🔑</span>
+          {{
+            formData.tempAccessKey ? "Access Key Created" : "Create Access Key"
+          }}
+        </button>
+
+        <div *ngIf="formData.tempAccessKey" class="preview-key-display">
+          <div class="key-header">
+            <span class="icon">✨</span>
+            <h4>Your Access Key Preview</h4>
+          </div>
+          <div class="key-value">{{ formData.tempAccessKey }}</div>
+          <p class="key-info">
+            Share this with your team members after registration!
+          </p>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="back-btn" (click)="previousStep()">
+          ← Back
+        </button>
+        <button type="button" class="submit-btn" (click)="nextStep()">
+          Next →
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 4: Password -->
+    <div *ngIf="currentStep === 4" class="step-content">
+      <h3 class="step-title">Secure Your Account</h3>
+      <p class="step-description">Create a strong password</p>
+
+      <div class="form-group">
+        <label for="password">
+          <span class="icon">🔒</span>
+          Password
+        </label>
+        <div class="password-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            name="password"
+            [(ngModel)]="formData.password"
+            placeholder="Create a password"
+          />
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="togglePasswordVisibility('password')"
+          >
+            {{ showPassword ? "👁️" : "👁️‍🗨️" }}
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">
+          <span class="icon">🔐</span>
+          Confirm Password
+        </label>
+        <div class="password-wrapper">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="formData.confirmPassword"
+            placeholder="Confirm your password"
+          />
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="togglePasswordVisibility('confirmPassword')"
+          >
+            {{ showConfirmPassword ? "👁️" : "👁️‍🗨️" }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Generated Access Key Display for Leaders -->
+      <div *ngIf="formData.generatedAccessKey" class="access-key-display">
+        <div class="key-header">
+          <span class="icon">🔑</span>
+          <h4>Your Access Key</h4>
+        </div>
+        <div class="key-value">{{ formData.generatedAccessKey }}</div>
+        <p class="key-info">
+          Share this key with your team members to let them join!
+        </p>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="back-btn" (click)="previousStep()">
+          ← Back
+        </button>
+        <button
+          type="button"
+          class="submit-btn"
+          [disabled]="isLoading"
+          [class.loading]="isLoading"
+          (click)="onSubmit()"
+        >
+          <span *ngIf="!isLoading">Create Account</span>
+          <span *ngIf="isLoading" class="spinner">
+            <span class="spinner-icon">⏳</span>
+            Creating...
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="footer-links">
+      <p>
+        Already have an account?
+        <a routerLink="/login" class="link">Sign In</a>
+      </p>
+      <p class="back-home">
+        <a routerLink="/" class="link">← Back to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Decorative Elements -->
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+</div>

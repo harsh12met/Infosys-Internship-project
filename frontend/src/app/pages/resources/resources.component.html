@@ -1,0 +1,111 @@
+<!-- Resources Page -->
+<div class="resources-page">
+  <!-- Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Learn & Connect</h1>
+      <p>Resources to help you work smarter, not harder</p>
+    </div>
+  </section>
+
+  <!-- Resources Grid -->
+  <section class="resources-section">
+    <div class="container">
+      <h2>Explore Our Resources</h2>
+      <div class="resources-grid">
+        <div class="resource-card" *ngFor="let resource of resources">
+          <div class="resource-icon">{{ resource.icon }}</div>
+          <h3>{{ resource.title }}</h3>
+          <p>{{ resource.description }}</p>
+          <a [href]="resource.link" class="resource-link">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides Section -->
+  <section class="guides-section">
+    <div class="container">
+      <h2>Popular Guides</h2>
+      <div class="guides-grid">
+        <div class="guide-card" *ngFor="let guide of guides">
+          <div class="guide-header">
+            <h3>{{ guide.title }}</h3>
+            <span class="duration">{{ guide.duration }}</span>
+          </div>
+          <div class="topics">
+            <span class="topic" *ngFor="let topic of guide.topics">{{
+              topic
+            }}</span>
+          </div>
+          <button class="btn-read">Read Guide</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Tutorials -->
+  <section class="video-section">
+    <div class="container">
+      <h2>Video Tutorials</h2>
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-icon">▶</div>
+          </div>
+          <h4>Introduction to Kanban Boards</h4>
+          <p class="video-duration">3:45 minutes</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-icon">▶</div>
+          </div>
+          <h4>Mastering Drag and Drop</h4>
+          <p class="video-duration">5:20 minutes</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-icon">▶</div>
+          </div>
+          <h4>Advanced Task Management</h4>
+          <p class="video-duration">7:15 minutes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section class="community-section">
+    <div class="container">
+      <h2>Join Our Community</h2>
+      <div class="community-cards">
+        <div class="community-card">
+          <div class="community-icon">💬</div>
+          <h3>Discussion Forum</h3>
+          <p>
+            Connect with other users, share tips, and get help from the
+            community
+          </p>
+          <button class="btn-join">Join Forum</button>
+        </div>
+
+        <div class="community-card">
+          <div class="community-icon">📧</div>
+          <h3>Newsletter</h3>
+          <p>
+            Get monthly updates, tips, and exclusive content delivered to your
+            inbox
+          </p>
+          <button class="btn-join">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Home -->
+  <div class="back-link">
+    <a routerLink="/">← Back to Home</a>
+  </div>
+</div>

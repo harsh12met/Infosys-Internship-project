@@ -1,0 +1,289 @@
+<!-- Task Card -->
+<div
+  class="task-card"
+  [class]="getPriorityClass()"
+  [class.has-new-comments]="hasNewComments()"
+  [draggable]="canModifyTask()"
+  (dragstart)="onDragStart($event)"
+>
+  <!-- View Mode -->
+  <div *ngIf="!isEditing" class="task-view">
+    <!-- Task Header -->
+    <div class="task-header">
+      <h4 class="task-title" [class.expanded]="isExpanded" [title]="task.title">
+        {{ task.title }}
+      </h4>
+      <div class="task-actions" *ngIf="canModifyTask()">
+        <button class="edit-btn" (click)="startEdit()" title="Edit task">
+          ✏️
+        </button>
+        <button class="delete-btn" (click)="deleteTask()" title="Delete task">
+          🗑️
+        </button>
+      </div>
+      <div class="task-read-only" *ngIf="!canModifyTask()">
+        <button
+          class="read-only-badge"
+          (click)="showTaskDetails(); $event.stopPropagation()"
+          title="Click to view task details"
+        >
+          👁️ View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Task Description -->
+    <p
+      class="task-description"
+      *ngIf="task.description"
+      [class.expanded]="isExpanded"
+      [title]="task.description"
+    >
+      {{ task.description }}
+    </p>
+
+    <!-- More/Less Button -->
+    <button
+      *ngIf="needsMoreButton()"
+      class="more-btn"
+      (click)="toggleExpand(); $event.stopPropagation()"
+      [title]="isExpanded ? 'Show less' : 'Show more'"
+    >
+      {{ isExpanded ? "Show Less ↑" : "More ↓" }}
+    </button>
+
+    <!-- Task Priority Badge -->
+    <div class="task-footer">
+      <span class="priority-badge" [class]="getPriorityClass()">
+        {{ task.priority }} Priority
+      </span>
+      <small class="task-date">
+        {{ task.createdAt | date : "short" }}
+      </small>
+    </div>
+  </div>
+
+  <!-- Comments Toggle Button (visible for all who can comment, outside edit/view mode) -->
+  <button
+    class="comments-toggle"
+    (click)="toggleComments(); $event.stopPropagation()"
+    *ngIf="!isEditing && canComment()"
+  >
+    💬 {{ comments.length }} Comment{{ comments.length !== 1 ? "s" : "" }}
+  </button>
+
+  <!-- Edit Mode -->
+  <div *ngIf="isEditing" class="task-edit">
+    <form (ngSubmit)="saveEdit()">
+      <!-- Edit Title -->
+      <input
+        type="text"
+        [(ngModel)]="editTitle"
+        name="editTitle"
+        class="edit-title-input"
+        placeholder="Task title..."
+        required
+      />
+
+      <!-- Edit Description -->
+      <textarea
+        [(ngModel)]="editDescription"
+        name="editDescription"
+        class="edit-description-input"
+        placeholder="Task description..."
+        rows="3"
+      ></textarea>
+
+      <!-- Edit Priority -->
+      <select
+        [(ngModel)]="editPriority"
+        name="editPriority"
+        class="edit-priority-select"
+      >
+        <option value="Low">Low Priority</option>
+        <option value="Medium">Medium Priority</option>
+        <option value="High">High Priority</option>
+      </select>
+
+      <!-- Edit Due Date (Leaders only) -->
+      <div *ngIf="isGroupLeader" class="edit-field">
+        <label class="edit-label">\ud83d\udcc5 Due Date:</label>
+        <input
+          type="date"
+          [(ngModel)]="editDueDate"
+          name="editDueDate"
+          class="edit-date-input"
+        />
+      </div>
+
+      <!-- Edit Assignment (Leaders only) -->
+      <div *ngIf="isGroupLeader" class="edit-field">
+        <label class="edit-label">\ud83d\udc65 Assign To:</label>
+        <select
+          [(ngModel)]="editAssignedTo"
+          name="editAssignedTo"
+          class="edit-assign-select"
+        >
+          <option value="">Unassigned</option>
+          <option *ngFor="let member of groupMembers" [value]="member._id">
+            {{ member.name }} ({{ member.email }})
+          </option>
+        </select>
+      </div>
+
+      <!-- Edit Actions -->
+      <div class="edit-actions">
+        <button type="submit" class="save-btn" [disabled]="!editTitle.trim()">
+          Save
+        </button>
+        <button type="button" class="cancel-btn" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Comments Section Below Task Card -->
+<div
+  class="comments-section-standalone"
+  *ngIf="!isEditing && canComment() && showComments"
+>
+  <div class="comments-container-standalone">
+    <div class="comments-header">
+      <h4>💬 Comments</h4>
+      <button class="close-comments" (click)="toggleComments()">✕</button>
+    </div>
+
+    <!-- Comments List -->
+    <div class="comments-list" *ngIf="comments.length > 0">
+      <div
+        class="comment-item"
+        [class.my-comment]="isMyComment(comment)"
+        [class.other-comment]="!isMyComment(comment)"
+        *ngFor="let comment of comments"
+      >
+        <div class="comment-bubble">
+          <div class="comment-header-chat">
+            <span class="comment-author">{{ comment.authorName }}</span>
+            <span class="comment-date">{{
+              comment.createdAt | date : "short"
+            }}</span>
+          </div>
+          <div class="comment-text">{{ comment.text }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Comment -->
+    <div class="add-comment">
+      <textarea
+        [(ngModel)]="newComment"
+        placeholder="Add a comment..."
+        class="comment-input"
+        rows="2"
+      ></textarea>
+      <button
+        class="comment-submit-btn"
+        (click)="addComment()"
+        [disabled]="!newComment.trim()"
+      >
+        Post Comment
+      </button>
+    </div>
+
+    <div class="no-comments" *ngIf="comments.length === 0">
+      <p>No comments yet. Be the first to comment!</p>
+    </div>
+  </div>
+</div>
+
+<!-- Task Details Modal (for view-only tasks) -->
+<div
+  class="task-modal-overlay"
+  *ngIf="showDetailsModal"
+  (click)="closeDetailsModal()"
+>
+  <div class="task-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>📋 Task Details</h3>
+      <button class="modal-close" (click)="closeDetailsModal()" title="Close">
+        ✕
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Task Title -->
+      <div class="detail-section">
+        <label class="detail-label">Title:</label>
+        <div class="detail-value task-title-detail">{{ task.title }}</div>
+      </div>
+
+      <!-- Task Description -->
+      <div class="detail-section" *ngIf="task.description">
+        <label class="detail-label">Description:</label>
+        <div class="detail-value">{{ task.description }}</div>
+      </div>
+
+      <!-- Priority -->
+      <div class="detail-section">
+        <label class="detail-label">Priority:</label>
+        <div class="detail-value">
+          <span class="priority-badge-modal" [class]="getPriorityClass()">
+            {{ task.priority }} Priority
+          </span>
+        </div>
+      </div>
+
+      <!-- Due Date -->
+      <div class="detail-section" *ngIf="task.dueDate">
+        <label class="detail-label">Due Date:</label>
+        <div class="detail-value">
+          📅 {{ task.dueDate | date : "medium" }}
+          <span
+            class="due-date-status"
+            [class.overdue]="formatDueDate().includes('Overdue')"
+          >
+            ({{ formatDueDate() }})
+          </span>
+        </div>
+      </div>
+
+      <!-- Assigned To -->
+      <div class="detail-section" *ngIf="task.assignedToName">
+        <label class="detail-label">Assigned To:</label>
+        <div class="detail-value">
+          <div class="assigned-info">
+            <div class="assigned-avatar">
+              {{ task.assignedToName.charAt(0).toUpperCase() }}
+            </div>
+            <div class="assigned-details">
+              <div class="assigned-name">{{ task.assignedToName }}</div>
+              <div class="assigned-email">{{ task.assignedToEmail }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Created Date -->
+      <div class="detail-section">
+        <label class="detail-label">Created:</label>
+        <div class="detail-value">{{ task.createdAt | date : "medium" }}</div>
+      </div>
+
+      <!-- Status -->
+      <div class="detail-section">
+        <label class="detail-label">Status:</label>
+        <div class="detail-value">
+          <span class="status-badge">{{ task.status }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="modal-close-btn" (click)="closeDetailsModal()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<!-- Kanban Column -->
+<div
+  [class]="getColumnClass()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  <!-- Column Header -->
+  <div
+    class="column-header"
+    [draggable]="canManageColumns"
+    (dragstart)="onColumnHeaderDragStart($event)"
+  >
+    <!-- View Mode -->
+    <div *ngIf="!isEditingTitle" class="column-title-container">
+      <h3 class="column-title">{{ title }}</h3>
+      <button
+        *ngIf="canManageColumns"
+        class="edit-title-btn"
+        (click)="startEditTitle()"
+        title="Edit column name"
+      >
+        ✏️
+      </button>
+    </div>
+
+    <!-- Edit Mode -->
+    <div *ngIf="isEditingTitle" class="column-title-edit">
+      <input
+        type="text"
+        [(ngModel)]="editTitle"
+        (keyup.enter)="saveTitle()"
+        (keyup.escape)="cancelEditTitle()"
+        class="edit-title-input"
+        #titleInput
+      />
+      <button class="save-title-btn" (click)="saveTitle()" title="Save">
+        ✓
+      </button>
+      <button
+        class="cancel-title-btn"
+        (click)="cancelEditTitle()"
+        title="Cancel"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="column-actions">
+      <span class="task-count">{{ tasks.length }}</span>
+      <button
+        *ngIf="canManageColumns"
+        class="add-column-btn"
+        (click)="requestAddColumn()"
+        title="Add new column"
+      >
+        +
+      </button>
+      <button
+        *ngIf="canManageColumns"
+        class="remove-column-btn"
+        (click)="requestRemoveColumn()"
+        title="Remove this column"
+      >
+        ×
+      </button>
+    </div>
+  </div>
+
+  <!-- Add Task Component (shown only for leaders and single users) -->
+  <div *ngIf="canAddTasks" class="add-task-container">
+    <app-add-task [columnStatus]="columnId" (taskAdded)="onTaskAdded()">
+    </app-add-task>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="🔍 Search tasks..."
+      class="search-input"
+    />
+  </div>
+
+  <!-- Tasks Container - Scrollable -->
+  <div class="tasks-container">
+    <!-- Drop zone at the top -->
+    <div
+      class="drop-zone"
+      [class.active-drop-zone]="dragOverIndex === 0"
+      (dragover)="onDragOverAtIndex($event, 0)"
+      (drop)="onDropAtIndex($event, 0)"
+    ></div>
+
+    <!-- Individual Tasks with drop zones -->
+    <ng-container
+      *ngFor="let task of filteredTasks; let i = index; trackBy: trackTaskById"
+    >
+      <!-- The actual task -->
+      <app-task
+        [task]="task"
+        (taskUpdated)="onTaskUpdated()"
+        (taskDeleted)="onTaskDeleted()"
+      >
+      </app-task>
+
+      <!-- Drop zone after each task -->
+      <div
+        class="drop-zone"
+        [class.active-drop-zone]="dragOverIndex === i + 1"
+        (dragover)="onDragOverAtIndex($event, i + 1)"
+        (drop)="onDropAtIndex($event, i + 1)"
+      ></div>
+    </ng-container>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredTasks.length === 0 && !searchQuery" class="empty-state">
+      <div class="empty-icon">📋</div>
+      <p class="empty-message">
+        {{
+          columnId === "todo"
+            ? "Click + to add new tasks"
+            : columnId === "inprogress"
+            ? "Drag tasks here from Todo"
+            : "Drag completed tasks here"
+        }}
+      </p>
+    </div>
+
+    <!-- No Results State -->
+    <div *ngIf="filteredTasks.length === 0 && searchQuery" class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <p class="empty-message">No tasks found matching "{{ searchQuery }}"</p>
+    </div>
+  </div>
+
+  <!-- Drop Zone Indicator -->
+  <div *ngIf="isDragOver" class="drop-indicator">
+    <span class="drop-text">Drop task here</span>
+  </div>
+</div>

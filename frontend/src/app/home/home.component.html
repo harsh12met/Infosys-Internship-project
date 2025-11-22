@@ -1,0 +1,621 @@
+<!-- Header Navigation -->
+<app-toast></app-toast>
+
+<header class="header">
+  <div class="container">
+    <div class="nav-wrapper">
+      <div class="logo" routerLink="/">
+        <h2>📋 Kanban</h2>
+      </div>
+
+      <nav class="nav-links">
+        <div class="nav-item" (click)="toggleFeaturesDropdown()">
+          <a>Features ▼</a>
+          <div
+            class="dropdown-menu large-dropdown"
+            *ngIf="showFeaturesDropdown"
+          >
+            <div class="dropdown-content-with-sidebar">
+              <div class="dropdown-main">
+                <h3>Explore the features that help your team succeed</h3>
+                <div class="dropdown-grid">
+                  <div class="dropdown-card">
+                    <div class="dropdown-icon">📥</div>
+                    <h4>Inbox</h4>
+                    <p>
+                      Capture every vital detail from emails, Slack, and more
+                      directly into your Trello Inbox.
+                    </p>
+                  </div>
+                  <div class="dropdown-card">
+                    <div class="dropdown-icon">📅</div>
+                    <h4>Planner</h4>
+                    <p>
+                      Sync your calendar and allocate focused time slots to
+                      boost productivity.
+                    </p>
+                  </div>
+                  <div class="dropdown-card">
+                    <div class="dropdown-icon">⚡</div>
+                    <h4>Automation</h4>
+                    <p>Automate tasks and workflows with Trello.</p>
+                  </div>
+                  <div class="dropdown-card">
+                    <div class="dropdown-icon">🔌</div>
+                    <h4>Power-Ups</h4>
+                    <p>
+                      Power up your teams by linking their favorite tools with
+                      Trello plugins.
+                    </p>
+                  </div>
+                  <div class="dropdown-card">
+                    <div class="dropdown-icon">📋</div>
+                    <h4>Templates</h4>
+                    <p>
+                      Give your team a blueprint for success with easy-to-use
+                      templates from industry leaders.
+                    </p>
+                  </div>
+                  <div class="dropdown-card">
+                    <div class="dropdown-icon">🔗</div>
+                    <h4>Integrations</h4>
+                    <p>
+                      Find the apps your team is already using or discover new
+                      ways to get work done in Trello.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-sidebar">
+                <h4>Meet Kanban</h4>
+                <p>
+                  Kanban makes it easy for your team to get work done. No matter
+                  the project, workflow, or type of team, Kanban can help keep
+                  things organized. It's simple – sign-up, create a board, and
+                  you're off! Productivity awaits.
+                </p>
+                <button
+                  (click)="toggleLoginPanel(); closeAllDropdowns()"
+                  class="btn-dropdown-cta"
+                >
+                  Get Started Free
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item" (click)="toggleSolutionsDropdown()">
+          <a>Solutions ▼</a>
+          <div class="dropdown-menu" *ngIf="showSolutionsDropdown">
+            <div class="dropdown-content">
+              <h3>Trello for every team</h3>
+              <div class="dropdown-grid">
+                <div class="dropdown-card">
+                  <h4>Marketing</h4>
+                  <p>Manage campaigns, launches, and content calendars</p>
+                </div>
+                <div class="dropdown-card">
+                  <h4>Project Management</h4>
+                  <p>Keep tasks in order and teams on track</p>
+                </div>
+                <div class="dropdown-card">
+                  <h4>Engineering</h4>
+                  <p>Build better products with agile workflows</p>
+                </div>
+                <div class="dropdown-card">
+                  <h4>Design</h4>
+                  <p>Organize design projects and feedback</p>
+                </div>
+                <div class="dropdown-card">
+                  <h4>Sales</h4>
+                  <p>Hit sales targets and track deals</p>
+                </div>
+                <div class="dropdown-card">
+                  <h4>HR</h4>
+                  <p>Streamline recruiting and onboarding</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item" (click)="toggleResourcesDropdown()">
+          <a>Resources ▼</a>
+          <div class="dropdown-menu" *ngIf="showResourcesDropdown">
+            <div class="dropdown-content">
+              <h3>Learn and connect</h3>
+              <div class="dropdown-grid">
+                <div class="dropdown-card">
+                  <div class="dropdown-icon">📚</div>
+                  <h4>Guide</h4>
+                  <p>Learn how to get the most out of Kanban</p>
+                </div>
+                <div class="dropdown-card">
+                  <div class="dropdown-icon">💻</div>
+                  <h4>Remote Work</h4>
+                  <p>Best practices for distributed teams</p>
+                </div>
+                <div class="dropdown-card">
+                  <div class="dropdown-icon">🎥</div>
+                  <h4>Webinars</h4>
+                  <p>Live sessions from productivity experts</p>
+                </div>
+                <div class="dropdown-card">
+                  <div class="dropdown-icon">👨‍💻</div>
+                  <h4>Developers</h4>
+                  <p>Build integrations and extend Kanban</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a routerLink="/about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <ng-container *ngIf="!isLoggedIn()">
+          <button class="btn-login" (click)="toggleLoginPanel()">Log in</button>
+          <button class="btn-signup" routerLink="/signup">Sign up</button>
+        </ng-container>
+        <ng-container *ngIf="isLoggedIn()">
+          <button class="btn-board" (click)="goToBoard()">Go to Board</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Dropdown Overlay -->
+<div
+  class="dropdown-overlay"
+  *ngIf="showFeaturesDropdown || showSolutionsDropdown || showResourcesDropdown"
+  (click)="closeAllDropdowns()"
+></div>
+
+<!-- Login Panel Overlay -->
+<div
+  class="login-overlay"
+  *ngIf="showLoginPanel"
+  (click)="closeLoginPanel()"
+></div>
+
+<!-- Login Panel -->
+<div class="login-panel" [class.active]="showLoginPanel">
+  <button class="close-btn" (click)="closeLoginPanel()">✕</button>
+
+  <div class="login-content">
+    <h3>Log in to Kanban</h3>
+
+    <form (ngSubmit)="login()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="isLoggingIn">
+        {{ isLoggingIn ? "Logging in..." : "Log in" }}
+      </button>
+    </form>
+
+    <div class="signup-link">
+      <a routerLink="/signup" (click)="closeLoginPanel()">Sign up instead</a>
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Kanban brings all your tasks and team together</h1>
+        <p>
+          Stay organized, boost productivity, and achieve your goals. Whether
+          you're managing personal projects or team workflows, Kanban makes it
+          effortless.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">⚡</div>
+            <div class="stat-label">Lightning Fast</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">📱</div>
+            <div class="stat-label">Fully Responsive</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">🎯</div>
+            <div class="stat-label">Easy to Use</div>
+          </div>
+        </div>
+        <button class="btn-cta" (click)="toggleLoginPanel()">
+          Get Started — It's Free!
+        </button>
+        <p class="cta-subtext">No credit card required • Start in seconds</p>
+      </div>
+
+      <div class="hero-visual">
+        <div class="board-preview">
+          <div class="preview-column">
+            <div class="preview-card"></div>
+            <div class="preview-card"></div>
+          </div>
+          <div class="preview-column">
+            <div class="preview-card"></div>
+            <div class="preview-card"></div>
+          </div>
+          <div class="preview-column">
+            <div class="preview-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative shapes -->
+  <div class="hero-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+</section>
+
+<!-- Learn & Connect Section -->
+<section class="learn-connect">
+  <div class="container">
+    <h2>Learn & Connect</h2>
+    <p class="section-subtitle">
+      Resources to help you work smarter, not harder
+    </p>
+
+    <div class="cards-grid">
+      <div class="resource-card">
+        <div class="card-icon">📚</div>
+        <h3>Guide</h3>
+        <p>
+          Learn how to get the most out of Kanban with our comprehensive guides
+          and tutorials
+        </p>
+      </div>
+
+      <div class="resource-card">
+        <div class="card-icon">💻</div>
+        <h3>Remote Work Guide</h3>
+        <p>
+          Best practices for managing remote teams and staying productive
+          anywhere
+        </p>
+      </div>
+
+      <div class="resource-card">
+        <div class="card-icon">🎥</div>
+        <h3>Webinars</h3>
+        <p>Join live sessions and watch recordings from productivity experts</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="card-icon">⭐</div>
+        <h3>Customer Stories</h3>
+        <p>See how teams around the world use Kanban to achieve their goals</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="card-icon">👨‍💻</div>
+        <h3>Developers</h3>
+        <p>Build custom integrations and extend Kanban's functionality</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="card-icon">❓</div>
+        <h3>Help Resources</h3>
+        <p>Find answers to common questions and get support when you need it</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Section -->
+<section class="why-choose">
+  <div class="container">
+    <h2>Why Choose Kanban?</h2>
+    <p class="section-subtitle">
+      Simple, powerful, and built for modern workflows
+    </p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🚀</div>
+        <h3>Start Instantly</h3>
+        <p>
+          No setup required. Create your first board in seconds and start
+          managing tasks right away.
+        </p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">💰</div>
+        <h3>100% Free</h3>
+        <p>
+          Full-featured task management without subscriptions, paywalls, or
+          hidden costs.
+        </p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Blazing Fast</h3>
+        <p>
+          Built with modern technology for instant updates and smooth
+          performance on any device.
+        </p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎨</div>
+        <h3>Beautiful & Simple</h3>
+        <p>
+          Clean, intuitive interface inspired by the best productivity tools in
+          the industry.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Preview Section -->
+<section class="features-preview">
+  <div class="container">
+    <h2>Powerful Features for Better Productivity</h2>
+    <p class="section-subtitle">
+      Everything you need to manage tasks efficiently
+    </p>
+
+    <div class="features-preview-grid">
+      <div class="feature-preview-card">
+        <div class="feature-icon">📋</div>
+        <h3>Kanban Boards</h3>
+        <p>Visual task management with customizable columns</p>
+      </div>
+
+      <div class="feature-preview-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Drag & Drop</h3>
+        <p>Effortlessly move tasks between columns</p>
+      </div>
+
+      <div class="feature-preview-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Lightning Fast</h3>
+        <p>Built with modern technology for speed</p>
+      </div>
+
+      <div class="feature-preview-card">
+        <div class="feature-icon">📱</div>
+        <h3>Responsive Design</h3>
+        <p>Works perfectly on all devices</p>
+      </div>
+    </div>
+
+    <div class="preview-action">
+      <button routerLink="/features" class="btn-preview">
+        Explore All Features →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Solutions Preview Section -->
+<section class="solutions-preview">
+  <div class="container">
+    <h2>Solutions for Every Team</h2>
+    <p class="section-subtitle">
+      Discover how Kanban can transform your workflow
+    </p>
+
+    <div class="solutions-preview-grid">
+      <div class="solution-preview-card">
+        <div class="solution-icon">👤</div>
+        <h3>Personal Productivity</h3>
+        <p>
+          Manage your daily tasks and achieve your goals with a simple, focused
+          workflow
+        </p>
+        <ul class="preview-benefits">
+          <li>Track personal projects</li>
+          <li>Organize daily tasks</li>
+          <li>Stay focused</li>
+        </ul>
+      </div>
+
+      <div class="solution-preview-card">
+        <div class="solution-icon">👥</div>
+        <h3>Small Team Projects</h3>
+        <p>
+          Collaborate with your team and keep everyone aligned on project
+          progress
+        </p>
+        <ul class="preview-benefits">
+          <li>Team coordination</li>
+          <li>Shared visibility</li>
+          <li>Better communication</li>
+        </ul>
+      </div>
+
+      <div class="solution-preview-card">
+        <div class="solution-icon">🎓</div>
+        <h3>Student Tracking</h3>
+        <p>
+          Perfect for students managing assignments, projects, and study
+          schedules
+        </p>
+        <ul class="preview-benefits">
+          <li>Assignment tracking</li>
+          <li>Study planning</li>
+          <li>Deadline management</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="preview-action">
+      <button routerLink="/solutions" class="btn-preview">
+        View All Solutions →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <!-- About Section -->
+      <div class="footer-section footer-about">
+        <h3 class="footer-logo">📋 ProjectFlow</h3>
+        <p class="footer-description">
+          ProjectFlow — Task & Team Collaboration Platform
+        </p>
+        <p class="footer-tagline">
+          Empowering teams to collaborate seamlessly and achieve more together.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h4 class="footer-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms & Conditions</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Us -->
+      <div class="footer-section">
+        <h4 class="footer-title">Contact Us</h4>
+        <ul class="footer-links footer-contact">
+          <li>
+            <span class="contact-icon">✉️</span>
+            <a href="mailto:harshalmali11204@gmail.com"
+              >harshalmali11204&#64;gmail.com</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Social Links -->
+      <div class="footer-section">
+        <h4 class="footer-title">Follow Us</h4>
+        <div class="social-links">
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            class="social-link"
+            title="Instagram"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            class="social-link"
+            title="LinkedIn"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              ></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+          <a
+            href="https://github.com"
+            target="_blank"
+            class="social-link"
+            title="GitHub"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-divider"></div>
+      <p class="footer-copyright">© 2025 ProjectFlow. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button
+  class="back-to-top"
+  *ngIf="showBackToTop"
+  (click)="scrollToTop()"
+  title="Back to top"
+>
+  ↑
+</button>

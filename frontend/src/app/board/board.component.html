@@ -1,0 +1,208 @@
+<!-- Kanban Board -->
+<div class="kanban-board">
+  <!-- Board Header -->
+  <div class="board-header">
+    <!-- Left Side: Title -->
+    <div class="header-left">
+      <h2 class="board-title">My Kanban Task Manager</h2>
+    </div>
+
+    <!-- Center: Search -->
+    <div class="header-center">
+      <div class="global-search-container">
+        <input
+          type="text"
+          [(ngModel)]="globalSearchQuery"
+          placeholder="🔍 Search across all columns..."
+          class="global-search-input"
+        />
+      </div>
+    </div>
+
+    <!-- Right Side: Notifications, User Info & Logout -->
+    <div class="header-right">
+      <!-- Clear All Board Button (Only for Leaders) -->
+      <button
+        *ngIf="canManageBoard"
+        class="clear-board-btn"
+        (click)="clearAllBoard()"
+        title="Clear entire board"
+      >
+        🗑️ Clear Board
+      </button>
+
+      <!-- Notification Bell (Only for Group Users) -->
+      <div
+        class="notification-container"
+        *ngIf="isGroupLeader || isGroupMember"
+      >
+        <div class="notification-bell" (click)="toggleNotifications()">
+          <span class="bell-icon">🔔</span>
+          <span class="notification-badge" *ngIf="unreadNotifications > 0">{{
+            unreadNotifications
+          }}</span>
+        </div>
+
+        <!-- Notification Dropdown -->
+        <div
+          class="notification-dropdown"
+          *ngIf="showNotifications"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="notification-header">
+            <h3>Notifications</h3>
+            <button
+              class="mark-all-read"
+              (click)="markAllAsRead(); $event.stopPropagation()"
+              *ngIf="unreadNotifications > 0"
+            >
+              Mark all read
+            </button>
+          </div>
+
+          <div class="notification-list" *ngIf="notifications.length > 0">
+            <div
+              *ngFor="let notification of notifications"
+              class="notification-item"
+              [class.unread]="!notification.isRead"
+              (click)="markAsRead(notification); $event.stopPropagation()"
+            >
+              <div class="notification-icon">
+                {{
+                  notification.type === "task_assigned"
+                    ? "📋"
+                    : notification.type === "comment_added"
+                    ? "💬"
+                    : notification.type === "task_updated"
+                    ? "📝"
+                    : "✅"
+                }}
+              </div>
+              <div class="notification-content">
+                <div class="notification-title">{{ notification.title }}</div>
+                <div class="notification-message">
+                  {{ notification.message }}
+                </div>
+                <div class="notification-time">
+                  {{ getTimeAgo(notification.createdAt) }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="no-notifications" *ngIf="notifications.length === 0">
+            <span class="empty-icon">📭</span>
+            <p>No notifications yet</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-info">
+        <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+        <div class="user-details">
+          <div class="user-name">{{ userName }}</div>
+          <div class="user-role">{{ userRole }}</div>
+        </div>
+      </div>
+      <button class="btn-logout" (click)="logout()">
+        <span class="logout-icon">🚪</span> Log out
+      </button>
+    </div>
+  </div>
+
+  <!-- Statistics Bubbles Row -->
+  <div class="stats-container">
+    <!-- Total Tasks Bubble -->
+    <div class="stat-bubble total-bubble">
+      <div class="bubble-count">{{ getTaskStatistics().total }}</div>
+      <div class="bubble-label">Total Tasks</div>
+    </div>
+
+    <!-- Dynamic Column Bubbles -->
+    <div
+      *ngFor="let columnStat of getAllColumnsStats(); let i = index"
+      class="stat-bubble column-bubble"
+      [class]="'bubble-color-' + i"
+    >
+      <div class="bubble-count">{{ columnStat.count }}</div>
+      <div class="bubble-label">{{ columnStat.title }}</div>
+    </div>
+  </div>
+
+  <!-- Columns Container -->
+  <div class="columns-container" [class.scrollable]="columns.length > 3">
+    <!-- Empty State - Show when no columns exist -->
+    <div
+      *ngIf="columns.length === 0 && !showAddColumn"
+      class="empty-board-state"
+    >
+      <div class="empty-state-content">
+        <div class="empty-icon">📋</div>
+        <h3>Welcome to Your Kanban Board!</h3>
+        <p *ngIf="isGroupLeader || (!isGroupLeader && !isGroupMember)">
+          Get started by creating your first column
+        </p>
+        <p *ngIf="isGroupMember">
+          No columns have been created yet. Please wait for your group leader to
+          set up the board.
+        </p>
+        <button
+          *ngIf="!isGroupMember"
+          class="btn-create-column"
+          (click)="openAddColumnForm('')"
+        >
+          <span class="icon">➕</span> Create Your First Column
+        </button>
+      </div>
+    </div>
+
+    <!-- Columns -->
+    <div
+      *ngFor="
+        let column of filteredColumns;
+        let i = index;
+        trackBy: trackColumnById
+      "
+      [class]="getColumnDragClass(i)"
+      (dragover)="onColumnDragOver($event, i)"
+      (dragleave)="onColumnDragLeave()"
+      (drop)="onColumnDrop($event, i)"
+    >
+      <app-column
+        [columnId]="column.id"
+        [title]="column.title"
+        [tasks]="column.tasks"
+        (tasksUpdated)="onTasksUpdated()"
+        (addColumnRequested)="openAddColumnForm(column.id)"
+        (removeColumnRequested)="removeColumn($event)"
+        (columnTitleUpdated)="updateColumnTitle($event)"
+        (columnDragStart)="onColumnDragStart(i)"
+      >
+      </app-column>
+    </div>
+
+    <!-- Add Column Form -->
+    <div *ngIf="showAddColumn" class="add-column-form">
+      <h3>Add New Column</h3>
+      <div class="form-group">
+        <label for="columnTitle">Column Title:</label>
+        <input
+          type="text"
+          id="columnTitle"
+          [(ngModel)]="newColumnTitle"
+          placeholder="Enter column title"
+          class="form-control"
+          autofocus
+        />
+      </div>
+      <div class="form-actions">
+        <button (click)="addColumn()" class="btn btn-success">
+          Add Column
+        </button>
+        <button (click)="cancelAddColumn()" class="btn btn-cancel">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+/* App Container Styles */
+.app-container {
+  width: 100%;
+  min-height: 100vh; /* Changed from height to min-height */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: auto; /* Allow vertical scroll */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reset any default margins and paddings */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure the app takes full viewport */
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh; /* Changed from height to min-height */
+  margin: 0;
+  padding: 0;
+}

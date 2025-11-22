@@ -1,0 +1,42 @@
+<!-- Features Page -->
+<div class="features-page">
+  <!-- Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Powerful Features for Your Workflow</h1>
+      <p>
+        Everything you need to organize tasks, manage projects, and boost
+        productivity
+      </p>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="features-section">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card" *ngFor="let feature of features">
+          <div class="feature-icon">{{ feature.icon }}</div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to get started?</h2>
+      <p>Try our Kanban board and experience the difference</p>
+      <button class="btn-cta" routerLink="/board">
+        Start Using Kanban Now
+      </button>
+    </div>
+  </section>
+
+  <!-- Back to Home -->
+  <div class="back-link">
+    <a routerLink="/">← Back to Home</a>
+  </div>
+</div>

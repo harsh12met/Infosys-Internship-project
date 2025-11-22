@@ -1,0 +1,348 @@
+.resources-page {
+  min-height: 100vh;
+  background: #f4f5f7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, #0079bf 0%, #5243aa 100%);
+  padding: 80px 0;
+  text-align: center;
+  color: white;
+}
+
+.page-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.page-header p {
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+/* Resources Section */
+.resources-section {
+  padding: 80px 0;
+}
+
+.resources-section h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 48px;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.resource-card {
+  background: white;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.resource-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.resource-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #172b4d;
+}
+
+.resource-card p {
+  font-size: 14px;
+  color: #5e6c84;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.resource-link {
+  color: #0079bf;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity 0.2s;
+}
+
+.resource-link:hover {
+  opacity: 0.8;
+}
+
+/* Guides Section */
+.guides-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.guides-section h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 48px;
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.guide-card {
+  background: #f4f5f7;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+
+.guide-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.guide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.guide-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #172b4d;
+  flex: 1;
+}
+
+.duration {
+  font-size: 12px;
+  color: #5e6c84;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.topic {
+  background: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #5e6c84;
+  font-weight: 500;
+}
+
+.btn-read {
+  background: #0079bf;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.btn-read:hover {
+  background: #026aa7;
+}
+
+/* Video Section */
+.video-section {
+  padding: 80px 0;
+}
+
+.video-section h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 48px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.video-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.video-thumbnail {
+  background: linear-gradient(135deg, #0079bf 0%, #5243aa 100%);
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.play-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #0079bf;
+  padding-left: 4px;
+}
+
+.video-card h4 {
+  padding: 16px 20px 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+.video-duration {
+  padding: 0 20px 16px;
+  font-size: 13px;
+  color: #5e6c84;
+  margin: 0;
+}
+
+/* Community Section */
+.community-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.community-section h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #172b4d;
+  margin-bottom: 48px;
+}
+
+.community-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.community-card {
+  background: #f4f5f7;
+  border-radius: 12px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.community-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.community-card h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #172b4d;
+  margin-bottom: 12px;
+}
+
+.community-card p {
+  font-size: 15px;
+  color: #5e6c84;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.btn-join {
+  background: #0079bf;
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-join:hover {
+  background: #026aa7;
+  transform: translateY(-1px);
+}
+
+/* Back Link */
+.back-link {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.back-link a {
+  color: #0079bf;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: opacity 0.2s;
+}
+
+.back-link a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 36px;
+  }
+
+  .resources-grid,
+  .guides-grid,
+  .video-grid,
+  .community-cards {
+    grid-template-columns: 1fr;
+  }
+}

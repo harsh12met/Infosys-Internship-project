@@ -1,0 +1,21 @@
+{
+  "name": "kanban-task-manager-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack Kanban Task Manager with Angular and Express",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "npm run dev"
+  },
+  "keywords": ["kanban", "angular", "express", "fullstack"],
+  "author": "Harshal Mali",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
