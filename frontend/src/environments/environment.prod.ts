@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-backend-url.onrender.com/api', // Update this with your Render backend URL
+  apiUrl: 'https://infosys-internship-project-backend.onrender.com/api',
 };
