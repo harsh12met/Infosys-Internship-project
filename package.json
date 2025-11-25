@@ -10,7 +10,7 @@
     "backend": "cd backend && npm run dev",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
-    "start": "npx serve frontend/dist/my-kanban-project/browser -s -l 4201 -n"
+    "start": "npx serve frontend/dist/my-kanban-project/browser --single --listen 4201 --no-clipboard"
   },
   "dependencies": {
     "serve": "^14.2.3"
