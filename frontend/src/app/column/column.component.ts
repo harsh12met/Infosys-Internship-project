@@ -52,7 +52,8 @@ export class ColumnComponent implements OnInit {
   }
 
   get canAddTasks(): boolean {
-    // All users can add tasks (single users, group leaders, and group members)
+    // Only single users and group leaders can add tasks
+    // Group members can ONLY view tasks (no creation allowed)
     const user = this.authService.getCurrentUser();
     if (!user) {
       console.log('canAddTasks: No user found, returning false');
@@ -71,9 +72,9 @@ export class ColumnComponent implements OnInit {
       return true;
     }
 
-    // Group members can also add tasks
-    console.log('canAddTasks: Group member, returning true');
-    return true;
+    // Group members CANNOT add tasks (view only)
+    console.log('canAddTasks: Group member, returning false (view only)');
+    return false;
   }
 
   get canManageColumns(): boolean {
