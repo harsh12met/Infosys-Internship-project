@@ -58,8 +58,9 @@ exports.addTaskComment = async (req, res) => {
       });
     }
 
-    // Find the task to get its title
+    // Find the task to get its title and column name
     let taskName = 'a task';
+    let columnName = '';
     if (boardOwnerId && boardOwnerType) {
       const board = await Board.findOne({
         ownerId: boardOwnerId,
@@ -72,6 +73,7 @@ exports.addTaskComment = async (req, res) => {
           const task = column.tasks.find(t => t.id === taskId);
           if (task) {
             taskName = task.title;
+            columnName = column.title;
             break;
           }
         }
@@ -108,7 +110,7 @@ exports.addTaskComment = async (req, res) => {
             userId: leader._id.toString(),
             type: 'comment_added',
             title: 'New Comment',
-            message: `${authorName} commented on "${taskName}"`,
+            message: `${authorName} commented on "${taskName}" in ${columnName}`,
             taskId: taskId,
             fromUserId: authorId,
             fromUserName: authorName
@@ -126,7 +128,7 @@ exports.addTaskComment = async (req, res) => {
             userId: assignedMember._id.toString(),
             type: 'comment_added',
             title: 'New Comment',
-            message: `${authorName} commented on "${taskName}"`,
+            message: `${authorName} commented on "${taskName}" in ${columnName}`,
             taskId: taskId,
             fromUserId: authorId,
             fromUserName: authorName
