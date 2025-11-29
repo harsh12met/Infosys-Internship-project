@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Task, TaskService } from '../services/task.service';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 interface Comment {
   _id?: string;
@@ -57,7 +58,7 @@ export class TaskComponent implements OnInit {
   // View details modal
   showDetailsModal = false;
 
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private taskService: TaskService,
