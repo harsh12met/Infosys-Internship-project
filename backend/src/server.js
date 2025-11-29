@@ -14,6 +14,8 @@ connectDB();
 const allowedOrigins = [
   'http://localhost:4201',
   'https://kanbanpro-chv3.onrender.com',
+  // Add your deployed frontend (Render) so CORS allows requests from that origin
+  'https://infosysproject-rudx.onrender.com',
   process.env.CORS_ORIGIN
 ].filter(Boolean);
 
