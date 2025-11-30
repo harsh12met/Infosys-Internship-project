@@ -7,6 +7,12 @@ A full-stack Kanban task management application with drag-and-drop functionality
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen)
 
+## 🌐 Live Demo
+
+**Frontend:** [https://infosysproject-rudx.onrender.com](https://infosysproject-rudx.onrender.com)
+
+**Backend API:** [https://infosys-internship-project-backend.onrender.com](https://infosys-internship-project-backend.onrender.com)
+
 ---
 
 ## ✨ Features
@@ -15,9 +21,13 @@ A full-stack Kanban task management application with drag-and-drop functionality
 - 👥 **Team Collaboration** - Group leaders can manage team members
 - 💬 **Real-time Comments** - Add comments and collaborate on tasks
 - 🔔 **Notifications** - Stay updated with task assignments and comments
+- 🎯 **Task Assignment** - Leaders can assign tasks to team members
+- 🔒 **Role-Based Access** - Different permissions for leaders and members
 - 🎨 **Modern UI** - Clean, responsive design with smooth animations
-- 🔐 **Secure Authentication** - JWT-based auth with role-based access
+- 🔐 **Secure Authentication** - JWT-based auth with role management
 - 📱 **Fully Responsive** - Works perfectly on desktop, tablet, and mobile
+- 🔍 **Task Search** - Quickly find tasks across columns
+- ⚡ **Real-time Updates** - Instant synchronization across devices
 
 ---
 
@@ -93,20 +103,25 @@ Frontend will run on `http://localhost:4201`
 
 ## 🚀 Deployment
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Netlify and Render.
+The application is deployed and live at:
 
-### Quick Deploy
+- **Frontend (Render):** [https://infosysproject-rudx.onrender.com](https://infosysproject-rudx.onrender.com)
+- **Backend API (Render):** [https://infosys-internship-project-backend.onrender.com](https://infosys-internship-project-backend.onrender.com)
 
-**Frontend (Netlify):**
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
-- Automatically configured via `netlify.toml`
-- Just connect your GitHub repo to Netlify
+### Deploy Your Own Instance
+
+**Frontend (Render/Netlify):**
+- Connect GitHub repository
+- Build Command: `npm install && npm run build`
+- Publish Directory: `dist/frontend/browser`
 
 **Backend (Render):**
-
 - Root Directory: `backend`
 - Build Command: `npm install`
 - Start Command: `npm start`
+- Add environment variables (MONGODB_URI, JWT_SECRET)
 
 ---
 
@@ -144,44 +159,55 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions on Net
 
 ### User Roles
 
-1. **Individual User**
-
-   - Create personal boards and tasks
-   - Manage own tasks and columns
+1. **Single User**
+   - Create and manage personal boards
+   - Full control over own tasks and columns
+   - Independent task management
 
 2. **Group Leader**
-
-   - Invite members to the team
-   - Clear entire board
-   - Manage team tasks
+   - Create teams with access keys
+   - Invite and manage team members
+   - Assign tasks to members
+   - Manage columns and board settings
+   - Receive notifications for member comments
 
 3. **Group Member**
-   - View and manage assigned tasks
-   - Add comments and collaborate
+   - Join team using access key
+   - View all team tasks (read-only)
+   - Comment on assigned tasks
+   - Cannot create, edit, or delete tasks
+   - Cannot manage columns
 
 ### Core Workflows
 
 1. **Sign Up / Login**
+   - Choose user type: Single or Group
+   - Group leaders get unique access key
+   - Members join using leader's access key
 
-   - Register as individual or group leader
-   - Login to access your board
+2. **Team Management** (Leaders Only)
+   - Share access key with team members
+   - View all team members
+   - Assign tasks to specific members
 
-2. **Create Columns**
+3. **Task Management**
+   - Leaders/Single users: Create, edit, delete tasks
+   - Set priority levels (Low, Medium, High)
+   - Add due dates
+   - Assign to team members (leaders only)
+   - Members: View-only access to all tasks
 
-   - Add custom columns (e.g., "To Do", "In Progress", "Done")
-   - Reorder columns via drag-and-drop
+4. **Kanban Board**
+   - Default columns: To Do, In Progress, Done
+   - Leaders/Single users can add custom columns
+   - Drag and drop tasks between columns
+   - Reorder columns as needed
 
-3. **Manage Tasks**
-
-   - Create tasks with title and description
-   - Drag tasks between columns
-   - Add priority and due dates
-   - Delete or edit tasks
-
-4. **Collaborate**
-   - Add comments to tasks
-   - Receive notifications for updates
-   - Invite team members (Group Leaders only)
+5. **Collaboration**
+   - Comment on tasks
+   - Members can comment on assigned tasks
+   - Real-time notifications
+   - Task activity tracking
 
 ---
 
@@ -204,7 +230,16 @@ FRONTEND_URL=http://localhost:4201
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:3000/api",
+  apiUrl: 'http://localhost:3000/api'
+};
+```
+
+**Production (`frontend/src/environments/environment.prod.ts`):**
+
+```typescript
+export const environment = {
+  production: true,
+  apiUrl: 'https://infosys-internship-project-backend.onrender.com/api'
 };
 ```
 
@@ -287,9 +322,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Harshal Mali**
-
 - GitHub: [@harsh12met](https://github.com/harsh12met)
 - Email: harshalmali11204@gmail.com
+- Project: [Infosys Internship Project](https://github.com/harsh12met/Infosys-Internship-project)
+
+**Live Application:**
+- Frontend: [https://infosysproject-rudx.onrender.com](https://infosysproject-rudx.onrender.com)
+- Backend: [https://infosys-internship-project-backend.onrender.com](https://infosys-internship-project-backend.onrender.com)
 
 ---
 
