@@ -169,8 +169,8 @@
   border: 2px solid #2196f3;
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  max-height: 200px;
-  overflow-y: auto;
+  max-height: 180px;
+  overflow-y: scroll !important;
   overflow-x: hidden;
   z-index: 9999;
   animation: slideDown 0.2s ease-out;
@@ -189,21 +189,22 @@
 }
 
 .member-dropdown::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 .member-dropdown::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 4px;
+  border-radius: 0 4px 4px 0;
 }
 
 .member-dropdown::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #2196f3;
   border-radius: 4px;
+  border: 2px solid #f1f1f1;
 }
 
 .member-dropdown::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #1976d2;
 }
 
 .member-item {
