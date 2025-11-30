@@ -164,20 +164,17 @@
 
 /* Member Dropdown */
 .member-dropdown {
-  position: absolute;
-  top: calc(100% + 2px);
-  left: 0;
-  right: 0;
-  margin-top: 4px;
+  position: fixed;
   background: white;
   border: 2px solid #2196f3;
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 1000;
+  z-index: 9999;
   animation: slideDown 0.2s ease-out;
+  min-width: 250px;
 }
 
 @keyframes slideDown {
@@ -264,6 +261,7 @@
 }
 
 .no-members-message {
+  position: fixed;
   padding: 16px;
   text-align: center;
   color: #666;
@@ -271,13 +269,9 @@
   background: white;
   border: 2px solid #2196f3;
   border-radius: 6px;
-  margin-top: 4px;
-  position: absolute;
-  top: calc(100% + 2px);
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  z-index: 9999;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  min-width: 250px;
 }
 
 /* Form Actions */

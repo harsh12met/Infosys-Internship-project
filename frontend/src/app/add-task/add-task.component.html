@@ -89,6 +89,7 @@
           <div
             *ngIf="showMemberDropdown && filteredMembers.length > 0"
             class="member-dropdown"
+            [ngStyle]="dropdownStyle"
             (mousedown)="$event.preventDefault()"
           >
             <div
@@ -113,6 +114,7 @@
               groupMembers.length === 0
             "
             class="no-members-message"
+            [ngStyle]="dropdownStyle"
             (mousedown)="$event.preventDefault()"
           >
             No group members found. Please add members to your group first.
@@ -126,6 +128,7 @@
               memberSearchQuery
             "
             class="no-members-message"
+            [ngStyle]="dropdownStyle"
             (mousedown)="$event.preventDefault()"
           >
             No members match "{{ memberSearchQuery }}"

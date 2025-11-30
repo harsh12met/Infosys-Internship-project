@@ -35,6 +35,7 @@ export class AddTaskComponent implements OnInit {
   filteredMembers: GroupMember[] = [];
   memberSearchQuery = '';
   showMemberDropdown = false;
+  dropdownStyle: any = {};
 
   constructor(
     private taskService: TaskService,
@@ -111,6 +112,20 @@ export class AddTaskComponent implements OnInit {
   onFocusAssignment() {
     this.showMemberDropdown = true;
     this.filterMembers(); // Reset to show all members
+    
+    // Calculate dropdown position
+    setTimeout(() => {
+      const input = document.querySelector('.member-search-input') as HTMLElement;
+      if (input) {
+        const rect = input.getBoundingClientRect();
+        this.dropdownStyle = {
+          top: `${rect.bottom + 4}px`,
+          left: `${rect.left}px`,
+          width: `${rect.width}px`
+        };
+      }
+    }, 0);
+    
     console.log(
       'Focus on assignment - showing dropdown, members count:',
       this.filteredMembers.length
